@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> {{ mode }} recette</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- instanciation du FormGroup pour dire a angular d'utiliser la forme réactive que j'ai créer - nécéssite aussi un ngsubmit-->
+  <form [formGroup]="recetteForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Titre</ion-label>
+        <ion-input type="text" formControlName="titre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Description</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Difficulté</ion-label>
+        <ion-select formControlName="difficulte">
+          <!-- soit on met en dur, soit on défini le tableau dans fichier.ts, rajout du binding value -->
+          <ion-option *ngFor="let option of selectOptions" [value]="option"> {{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <button type="button" clear ion-button block (click)="onManageIngredients()">Gérer les ingrédients</button>
+    <!-- déclaration du tableau d'ingrédients -->
+    <ion-list formArrayName="ingredients">
+      <!-- ici rajout de tous les control qui concerne la fenetre, j'ai des control de control... 
+      ingrédients de manière individuels-->
+      <ion-item *ngFor="let igControl of recetteForm.get('ingredients').controls; let i = index">
+        <ion-label floating>Nom</ion-label>
+        <ion-input tupe="text" [formControlName]="i"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button block type="submit" [disabled]="!recetteForm.valid">{{ mode }} recette</button>
+  </form>
+</ion-content>

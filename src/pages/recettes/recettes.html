@@ -1,0 +1,25 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onNewRecette()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Recettes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-list>
+  <!-- pour transmettre les données entre les pages je peux injecter les paramètres dans la méthode -->
+  <button ion-item *ngFor="let recette of recettes; let i = index" 
+  (click)="onLoadRecette(recette, i)">
+    <h2>{{recette.titre}}</h2>
+    <ion-note>{{recette.difficulte}}</ion-note>
+  </button>
+</ion-list>
+</ion-content>

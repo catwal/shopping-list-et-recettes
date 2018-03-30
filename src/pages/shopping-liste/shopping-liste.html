@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Shopping Liste</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <!-- angular gère le form automatiquement mais il faut rajouter le ngModel pour qu'il puisse gerer
+  l'appel avec #f="ngForm" permet d'appeler le ngSubmit et de lui mettre dans sa méthode le f de ref a form -->
+  <form #f="ngForm" (ngSubmit)="onAddItem(f)">
+    <!-- grid aurait pu être possible aussi -->
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>
+          Nom
+        </ion-label>
+        <ion-input type="text" name="ingredientNom" placeholder="Patates" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>  
+          Nombre
+        </ion-label> 
+        <ion-input type="number" name="ingredientNombre" placeholder="100" ngModel required></ion-input>
+      </ion-item>
+    </ion-list>
+    <!-- disabled = tant que champs pas remplie, bouton non disponible -->
+    <button ion-button type="submit" block [disabled]="!f.valid">Ajouter l'ingrédient</button>
+  </form>
+  <ion-list>
+    <!-- definition d'index pour la position et passé en paramètre de la méthode pour que ce soit cette position qui sera supprimée -->
+    <ion-item *ngFor="let item of listItems; let i = index" (click)="onRemoveItem(i)">
+      <h3> {{item.name}} x{{item.amount}}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>
