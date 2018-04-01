@@ -11,10 +11,11 @@ import { RecettesPage } from '../pages/recettes/recettes';
 import { ShoppingListePage } from '../pages/shopping-liste/shopping-liste';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ShoppingListeService } from '../services/shopping.list.service';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecetteService } from '../services/recette.service';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
+import { AuthService } from '../services/auth.service';
 
 @NgModule({
   declarations: [
@@ -48,9 +49,10 @@ import { SignupPage } from '../pages/signup/signup';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ShoppingListeService,
-    RecetteService
+    RecetteService,
+    AuthService
   ]
 })
-export class AppModule {}
+export class AppModule { }
