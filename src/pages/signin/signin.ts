@@ -28,8 +28,7 @@ export class SigninPage {
     this.authService.signin(form.value.email, form.value.password)
       .then(data => {
         loading.dismiss();
-
-        console.log(data)
+        console.log(data);
       })
       .catch(error => {
         loading.dismiss();

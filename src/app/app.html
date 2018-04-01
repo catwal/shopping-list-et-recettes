@@ -6,28 +6,29 @@ on a toujorus un databinding avec content qui refere au nav-->
             <ion-title>Menu</ion-title>
         </ion-toolbar>
     </ion-header>
+    <!-- affichage des boutons que si authentifié ou non -->
     <ion-content>
         <ion-list>
             <button ion-item icon-left
-            (click)="onLoad(tabsPage)">
+            (click)="onLoad(rootPage)" *ngIf="isAuthenticated">
             <ion-icon name="book"></ion-icon>
             Recettes
 
             </button>
             <button ion-item icon-left
-            (click)="onLoad(signinPage)">
+            (click)="onLoad(signinPage)" *ngIf="!isAuthenticated">
             <ion-icon name="log-in"></ion-icon>
             Signin
 
             </button>
             <button ion-item icon-left
-            (click)="onLoad(signupPage)">
+            (click)="onLoad(signupPage)" *ngIf="!isAuthenticated">
             <ion-icon name="person"></ion-icon>
             Signup
 
             </button>
             <button ion-item icon-left
-            (click)="onLogOut()">
+            (click)="onLogOut()" *ngIf="isAuthenticated">
             <ion-icon name="log-out"></ion-icon>
             Logout
 
@@ -39,4 +40,4 @@ on a toujorus un databinding avec content qui refere au nav-->
 
 
 <!-- toujours rajout #nav dans ion-nav -->
-<ion-nav [root]="tabsPage" #nav></ion-nav>
+<ion-nav [root]="rootPage" #nav></ion-nav>
