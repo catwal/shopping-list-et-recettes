@@ -7,4 +7,7 @@ export class AuthService {
        /* je vais avoir un retour message qui <=> à une promise */
         return firebase.auth().createUserWithEmailAndPassword(email, password);
     }
+    signin(email: string, password: string){
+        return firebase.auth().signInWithEmailAndPassword(email, password);
+    }
 }
