@@ -1,1 +1,42 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<!-- la sidebar est toujours dans la page app.html
+on a toujorus un databinding avec content qui refere au nav-->
+<ion-menu [content]="nav">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <button ion-item icon-left
+            (click)="onLoad(tabsPage)">
+            <ion-icon name="book"></ion-icon>
+            Recettes
+
+            </button>
+            <button ion-item icon-left
+            (click)="onLoad(signinPage)">
+            <ion-icon name="log-in"></ion-icon>
+            Signin
+
+            </button>
+            <button ion-item icon-left
+            (click)="onLoad(signupPage)">
+            <ion-icon name="person"></ion-icon>
+            Signup
+
+            </button>
+            <button ion-item icon-left
+            (click)="onLogOut()">
+            <ion-icon name="log-out"></ion-icon>
+            Logout
+
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+
+
+<!-- toujours rajout #nav dans ion-nav -->
+<ion-nav [root]="tabsPage" #nav></ion-nav>

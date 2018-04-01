@@ -13,6 +13,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ShoppingListeService } from '../services/shopping.list.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecetteService } from '../services/recette.service';
+import { SigninPage } from '../pages/signin/signin';
+import { SignupPage } from '../pages/signup/signup';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { RecetteService } from '../services/recette.service';
     RecettePage,
     RecettesPage,
     ShoppingListePage,
-    TabsPage
+    TabsPage,
+    SigninPage,
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { RecetteService } from '../services/recette.service';
     RecettePage,
     RecettesPage,
     ShoppingListePage,
-    TabsPage
+    TabsPage,
+    SigninPage,
+    SignupPage
   ],
   /* toujours rajouter le service dans le provider */
   providers: [
