@@ -16,6 +16,7 @@ import { RecetteService } from '../services/recette.service';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 import { AuthService } from '../services/auth.service';
+import { SlOptionsPage } from '../pages/shopping-liste/sl-options/sl-options';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AuthService } from '../services/auth.service';
     ShoppingListePage,
     TabsPage,
     SigninPage,
-    SignupPage
+    SignupPage,
+    SlOptionsPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { AuthService } from '../services/auth.service';
     ShoppingListePage,
     TabsPage,
     SigninPage,
-    SignupPage
+    SignupPage,
+    SlOptionsPage
   ],
   /* toujours rajouter le service dans le provider */
   providers: [

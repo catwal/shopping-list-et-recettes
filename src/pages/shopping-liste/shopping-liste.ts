@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { ShoppingListeService } from '../../services/shopping.list.service';
 import { Ingredient } from '../../models/ingredient';
+import { SlOptionsPage } from './sl-options/sl-options';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,10 @@ export class ShoppingListePage {
   /* ici la propriété est déclarée mais elle n'apparait toujours pas puisque vide */
   listItems: Ingredient[];
   /* injecter le service dans le constructeur */
-  constructor(public navCtrl: NavController, public navParams: NavParams, private slService: ShoppingListeService) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private slService: ShoppingListeService,
+  private popoverCtrl: PopoverController) {
   }
 
   /* les infos n'apparaissent pas en simultanées puisqu'elles restent dans le cache */
@@ -39,5 +43,11 @@ export class ShoppingListePage {
     this.slService.removeItem(index);
     this.loadItems();
   }
-  
+  /* pour que le popover soit bien positionner il faut lui passer un event JS 
+  le mousevent va donner les coordonnées ou doit s'ouvire le popover*/
+  onShowOption(event: MouseEvent){
+    /* comme pour le modal on a juste besoin de rajouter la page */
+    const popoverCtrl = this.popoverCtrl.create(SlOptionsPage);
+    popoverCtrl.present({ev: event});
+  }
 }
