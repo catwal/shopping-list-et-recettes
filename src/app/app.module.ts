@@ -17,6 +17,8 @@ import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 import { AuthService } from '../services/auth.service';
 import { SlOptionsPage } from '../pages/shopping-liste/sl-options/sl-options';
+/* pour que http marche il faut absolument le httpmodule! */
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { SlOptionsPage } from '../pages/shopping-liste/sl-options/sl-options';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

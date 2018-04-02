@@ -56,11 +56,17 @@ export class ShoppingListePage {
         if (data.action == 'load') {
 
         } else {
-          /* getToken va donner une promise token actif a a refresh */
-          this.authService.getActiveUser().getToken()
+          /* pour cas clique store = getToken va donner une promise token actif a a refresh */
+          this.authService.getActiveUser().getIdToken()
             .then(
               (token: string) => {
-                
+                this.slService.storeList(token)
+                  .subscribe(
+                    () => console.log('Succès!'),
+                    error => {
+                      console.log(error);
+                    }
+                  )
               });
         }
 
