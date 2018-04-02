@@ -54,7 +54,25 @@ export class ShoppingListePage {
     popoverCtrl.onDidDismiss(
       data => {
         if (data.action == 'load') {
-
+          this.authService.getActiveUser().getIdToken()
+            .then(
+              (token: string) => {
+                this.slService.fetchList(token)
+                  .subscribe(
+                    (liste: Ingredient[]) => {
+                      if (liste) {
+                        /* remplacement de l'ancienne par la nouvelle liste */
+                        this.listItems = liste;
+                        console.log('Succès!');
+                      } else {
+                        this.listItems = [];
+                      }
+                    },
+                    error => {
+                      console.log(error);
+                    }
+                  );
+              });
         } else {
           /* pour cas clique store = getToken va donner une promise token actif a a refresh */
           this.authService.getActiveUser().getIdToken()
@@ -66,7 +84,7 @@ export class ShoppingListePage {
                     error => {
                       console.log(error);
                     }
-                  )
+                  );
               });
         }
 

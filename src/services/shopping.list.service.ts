@@ -36,7 +36,7 @@ export class ShoppingListeService {
         splice permet de supprimer */
         this.ingredients.splice(index, 1);
     }
-
+    /* envoi des données */
     storeList(token: string) {
         /* récupération dl'id unique du user 
         le nom du fichier peut etre n'importe quoi mais par contre toujours en json*/
@@ -46,9 +46,22 @@ export class ShoppingListeService {
         la méthode .map() qui provient de rxjs et permet de transformer object java en objet json
         ! Response doit etre importée*/
         return this.http
-        .put('https://ionic-http-oauth.firebaseio.com/' + userId + '/shopping-liste.json?auth='+ token, this.ingredients)
-        .map((response: Response)=>{
-            return response.json();
-        });
+            .put('https://ionic-http-oauth.firebaseio.com/' + userId + '/shopping-liste.json?auth=' + token, this.ingredients)
+            .map((response: Response) => {
+                return response.json();
+            });
+    }
+    /* récupération des données */
+    fetchList(token: string) {
+        const userId = this.authSerive.getActiveUser().uid;
+        return this.http
+            .get('https://ionic-http-oauth.firebaseio.com/' + userId + '/shopping-liste.json?auth=' + token)
+            .map((response: Response)=>{
+                return response.json();
+            })
+            /* do permet d'utiliser les données en autre chose qu'avec méthode subscribe */
+            .do((data)=>{
+                this.ingredients = data
+            });
     }
 }
