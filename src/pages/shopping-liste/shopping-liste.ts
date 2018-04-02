@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, LoadingController, AlertController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { ShoppingListeService } from '../../services/shopping.list.service';
 import { Ingredient } from '../../models/ingredient';
@@ -19,7 +19,9 @@ export class ShoppingListePage {
     public navParams: NavParams,
     private slService: ShoppingListeService,
     private popoverCtrl: PopoverController,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController) {
   }
 
   /* les infos n'apparaissent pas en simultanées puisqu'elles restent dans le cache */
@@ -48,41 +50,54 @@ export class ShoppingListePage {
   /* pour que le popover soit bien positionner il faut lui passer un event JS 
   le mousevent va donner les coordonnées ou doit s'ouvire le popover*/
   onShowOption(event: MouseEvent) {
+    const loading = this.loadingCtrl.create({
+      content: 'Veuillez patienter...'
+    });
     /* comme pour le modal on a juste besoin de rajouter la page */
     const popoverCtrl = this.popoverCtrl.create(SlOptionsPage);
     popoverCtrl.present({ ev: event });
     popoverCtrl.onDidDismiss(
       data => {
         if (data.action == 'load') {
+          /* présentation du loading quand popover disparait et que load data est en cours */
+          loading.present();
           this.authService.getActiveUser().getIdToken()
             .then(
               (token: string) => {
                 this.slService.fetchList(token)
                   .subscribe(
                     (liste: Ingredient[]) => {
+                      loading.dismiss();
                       if (liste) {
                         /* remplacement de l'ancienne par la nouvelle liste */
                         this.listItems = liste;
                         console.log('Succès!');
                       } else {
                         this.listItems = [];
-                      }
+                      } 
                     },
                     error => {
+                      loading.dismiss();
+                      this.handleError(error.message);
                       console.log(error);
                     }
                   );
               });
-        } else {
+        } else if (data.action == 'store') {
+          loading.present();
           /* pour cas clique store = getToken va donner une promise token actif a a refresh */
           this.authService.getActiveUser().getIdToken()
             .then(
               (token: string) => {
                 this.slService.storeList(token)
                   .subscribe(
-                    () => console.log('Succès!'),
+                    () => /* console.log('Succès!'), */
+                      loading.dismiss(),
                     error => {
-                      console.log(error);
+                      /* rajout d'une méthode handler error car sinon je n'ai rien qui se passe si j'ai une erreur */
+                      loading.dismiss();
+                      this.handleError(error.message);
+                      /* console.log(error); */
                     }
                   );
               });
@@ -91,4 +106,13 @@ export class ShoppingListePage {
       }
     );
   }
+  private handleError(errorMessage: string) {
+    const alert = this.alertCtrl.create({
+      title: 'Une erreur est survenue!',
+      message: errorMessage,
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+
 }
