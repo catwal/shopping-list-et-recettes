@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+.import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavParams, ActionSheetController, AlertController, ToastController, NavController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { RecetteService } from '../../services/recette.service';
